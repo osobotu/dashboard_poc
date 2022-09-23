@@ -11,14 +11,14 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> login({required String email, required String password}) async {
     emit(AuthLoading());
-    final token =
-        await _authenticationRepository.login(email: email, password: password);
-
-    if (token.isNotEmpty) {
-      print(token);
+    try {
+      final token = await _authenticationRepository.login(
+          email: email, password: password);
       emit(AuthSuccess(token: token));
-    } else {
-      emit(const AuthFailure(errorMessage: 'Incorrect email or password'));
+    } on Exception {
+      emit(const AuthFailure(
+          errorMessage:
+              'Incorrect email or password. Use the following test details {"email": "eve.holt@reqres.in", "password": "cityslicka"}'));
     }
   }
 }

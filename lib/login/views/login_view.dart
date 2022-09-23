@@ -61,7 +61,19 @@ class LoginView extends StatelessWidget {
                     listener: ((context, state) {
                       if (state is AuthSuccess) {
                         context.go('/home');
-                      } else if (state is AuthFailure) {}
+                      } else if (state is AuthFailure) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const Align(
+                                alignment: Alignment.bottomCenter,
+                                child: AlertDialog(
+                                  title: Text(
+                                      'Incorrect Email or Password. Use test details.'),
+                                ),
+                              );
+                            });
+                      }
                     }),
                     builder: (context, state) {
                       return Builder(
@@ -75,8 +87,6 @@ class LoginView extends StatelessWidget {
                               await context.read<AuthCubit>().login(
                                   email: emailController.text,
                                   password: passwordController.text);
-                              print(emailController.text);
-                              print(passwordController.text);
                             },
                             child: state is AuthLoading
                                 ? const CircularProgressIndicator(

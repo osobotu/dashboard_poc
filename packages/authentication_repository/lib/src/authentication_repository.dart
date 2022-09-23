@@ -8,8 +8,12 @@ class AuthenticationRepository {
 
   Future<String> login(
       {required String email, required String password}) async {
-    final token =
-        await _reqResApiClient.login(email: email, password: password);
-    return token;
+    try {
+      final token =
+          await _reqResApiClient.login(email: email, password: password);
+      return token;
+    } on Exception {
+      throw LoginFailure();
+    }
   }
 }
