@@ -12,9 +12,7 @@ class LoginView extends StatelessWidget {
     return const ResponsiveLayout(
       mobileLayout: MobileLoginView(),
       desktopLayout: DesktopLoginView(),
-      tabletLayout: Scaffold(
-        backgroundColor: Colors.amberAccent,
-      ),
+      tabletLayout: DesktopLoginView(),
     );
   }
 }
